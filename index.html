@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="./index.css">
+	<title>demo1-image-card</title>
+</head>
+<body>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+
+	<div id="mask">loading...</div>
+
+	<section class="hero-section">
+		<div class="card-grid">
+			<a class="card" href="#">
+				<div class="card__background" id="image-card-1"></div>
+				<div class="card__content">
+					<p class="card__category">Category</p>
+					<h3 class="card__heading">Example Card Heading</h3>
+				</div>
+			</a>
+			<a class="card" href="#">
+				<div class="card__background" id="image-card-2"></div>
+				<div class="card__content">
+					<p class="card__category">Category</p>
+					<h3 class="card__heading">Example Card Heading</h3>
+				</div>
+			</a>
+			<a class="card" href="#">
+				<div class="card__background" id="image-card-3"></div>
+				<div class="card__content">
+					<p class="card__category">Category</p>
+					<h3 class="card__heading">Example Card Heading</h3>
+				</div>
+			</li>
+			<a class="card" href="#">
+				<div class="card__background" id="image-card-4"></div>
+				<div class="card__content">
+					<p class="card__category">Category</p>
+					<h3 class="card__heading">Example Card Heading</h3>
+				</div>
+			</a>
+		<div>
+	</section>
+	
+
+	<script>
+
+		function urlContentToDataUri(url){
+			return fetch(url)
+							.then( response => response.blob() )
+							.then( blob => new Promise( callback =>{
+								let reader = new FileReader()
+								reader.onload = function(){ callback(this.result) }
+								reader.readAsDataURL(blob)
+							}))
+		}
+		
+		// urlContentToDataUri('https://images.unsplash.com/photo-1557004396-66e4174d7bf6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=6').then(imageUrl => {
+		// 	console.log( 'urlData', imageUrl)
+		// 	document.getElementById('image-card-4').style.backgroundImage = `url(${imageUrl})`
+		// })
+
+
+		let getImage1 = urlContentToDataUri('https://images.unsplash.com/photo-1557177324-56c542165309?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=20')
+		let getImage2 = urlContentToDataUri('https://images.unsplash.com/photo-1557187666-4fd70cf76254?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=20')
+		let getImage3 = urlContentToDataUri('https://images.unsplash.com/photo-1556680262-9990363a3e6d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=20')
+		let getImage4 = urlContentToDataUri('https://images.unsplash.com/photo-1557004396-66e4174d7bf6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=20')
+
+		Promise.all([getImage1, getImage2, getImage3, getImage4]).then(result => {
+			document.getElementById('mask').style.display = 'none'
+			document.getElementById('image-card-1').style.backgroundImage = `url(${result[0]})`
+			document.getElementById('image-card-2').style.backgroundImage = `url(${result[1]})`
+			document.getElementById('image-card-3').style.backgroundImage = `url(${result[2]})`
+			document.getElementById('image-card-4').style.backgroundImage = `url(${result[3]})`
+		})
+
+	</script>
+</body>
+</html>
